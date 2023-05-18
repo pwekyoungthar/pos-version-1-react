@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Header from "./Components/Header/Header";
+import Main from "./Components/Main/Main";
+import Overlay from "./Components/UI/OverLay";
+import Modal from "./Components/UI/Modal/Modal";
+import { useState } from "react";
 function App() {
+  const [overlay, setOverlay] = useState(false);
+  const [itemList, setItemList] = useState([]);
+  const overlayTrueState = (e) => {
+    setOverlay(e);
+  };
+  const overlayFalseState = (e) => {
+    setOverlay(e);
+  };
+  const allItemHander = (e) => {
+    setItemList((prevItems) => [e, ...prevItems]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {overlay ? <Overlay onFalseOverlay={overlayFalseState} /> : ""}
+      {overlay ? <Modal onGetAllItems={allItemHander} /> : ""}
+
+      <Header onTrueOverlay={overlayTrueState} />
+      <Main itemList={itemList} />
+    </>
   );
 }
 
